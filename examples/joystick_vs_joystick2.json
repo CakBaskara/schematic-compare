@@ -1,0 +1,70 @@
+{
+  "_comment": "Example config for JOYSTICK_EVB_KC_V01_04091617.pdf (before) vs joystick2_evb_kc_v01_0715.pdf (after). Copy it for another pair of schematics and change what applies.",
+  "before_name": "Joystick",
+  "after_name": "Joystick2",
+  "value_overrides": {
+    "after": {
+      "VR1": {"value": "Hall_Joystick _JH16"},
+      "U18": {"value": "SGM4553YN8G/TR"},
+      "U17": {"value": "PY32F040R1BT6-LQFP-64"}
+    }
+  },
+  "block_names": {
+    "after": {
+      "4:Untitled p4 (U18)": "I2C Level Shifter (untitled)",
+      "5:Untitled p5 (D2)": "USB / Power Option (untitled)",
+      "6:Untitled p6 (SW7)": "Trigger/Sub/Shoulder Keys",
+      "6:Buttons": "Back Buttons"
+    }
+  },
+  "pins": ["J1"],
+  "block_remarks": {
+    "Histroy": "Title ATS2855+ATS3031 to ATS2887 CONTROLLER_MAIN. Revision table restarted: V1.0 Draft version (Tony, 2026.0128). ATS2855 / ATS3031 GPIO assignment tables removed.\nCheck: table of contents still lists 6 sheets with the old names (04 ATS3031, 05 ATS2855, 06 LCD/Buttons); the document has 7 sheets.",
+    "Block Diagram": "ATS2855 core board + ATS3031 base board replaced by one carrier for ATS3085 core board or ATS2887 core board, with an MCU I/O expander (PY32) for keys, sticks and RGB.\nCheck: diagram labels the MCU PY32F031C; U17 on sheet 7 is PY32F040R1BT6.",
+    "Power Tree": "SS88C9H charger replaced by ETA7014D2I OVP + AW32001A charger. New rails: RT9193-33GB, RT9193-18GB, RT9078N x2 (TFT-LCD, BL-Power), SY7072ABC (motors), DCDC 5V to 3.8V for the ATS2887 core. Sheet is now a pasted picture.\nCheck: sheet 04 makes LDO_VCC3v3 with DCDC U15 MT3102ASBR, not the RT9193-33GB LDO shown here.",
+    "USB-C": "USB D+/D- 3-way 0R routing (CHG_DP/DM, 3031_DP/DM, Option A 2855_DP/DM) replaced by one path CoreB_DP/DM (RZA11/RZA12 0R). FB1/CZA6 moved to DCIN OVP.",
+    "DCIN OVP": "New input protection: USB_5V - FB1 - ETA7014D2I OVP (UA6) - DCIN.\nCheck: RZA282 0R is drawn from UA6 IN to OUT; if fitted it bypasses the OVP.",
+    "Charger": "SS88C9H switching charger replaced by AW32001A I2C charger (UA7); CH_SCL/CH_SDA from 3085_3v3 or 2887_3v3 via 0R. New JP1/JP2 select internal or external charging.\nCheck: CZA17 on DCIN is now 1UF 6.3V (was 16V); new CZA47 is also 6.3V.",
+    "Charger Power & I/O Interface": "New off-page connector blocks only (USB_5V, DC5V, DCIN, LI_BAT, 55_VDD, SUB_SVCC, GND).",
+    "MAIN": "Whole ATS3031 base-board circuit removed. Q1, Q2, YA1, CZA7-CZA9, FB3 refs are reused in new circuits.",
+    "ANT": "Removed. CZA1-CZA4 refs reused as XTAL load caps on sheet 7.",
+    "ONOFF(B_XBOX)": "Removed. Power key is now SW1 ON/OFF on sheet 5.",
+    "Headphone amp": "Removed. Earphone now driven from the core board ROUT/LOUT via To Phone Jack (sheet 5). UA4 ref reused for the LCD LDO.",
+    "LED(XBOX_LED)": "Removed. Replaced by the RGB chain on sheet 6.",
+    "Earphone 3.5mm Port": "AC coupling, AUX_DET pull-up, MIC bias and the 'To 3031' links removed; jack nets now go to sheet 5 (AUX_L_1, AUX_R_1, HP_DET_1, MIC1).",
+    "Encryption IC circuits": "Moved from sheet 5. VDD now LDO_VCC3v3 via RZA77 0R. I2C from 3085_3v3 or 2887_3v3 via 0R with 10K pull-ups. AU_RST from EX_RESET via R7 0R.",
+    "3DVR(Joystick)": "Moved from sheet 5. Analog 3DVR sticks replaced by Hall_Joystick _JH16, supply from PY32_VCC; outputs to the PY32 ADC via 0R.",
+    "HALL Sensor": "Moved from sheet 5. Supply HALL_VCC from PY32_VCC; outputs to PY32 L_T_ADC / R_T_ADC.",
+    "IMU": "New: U4 ICM-42670-P, I2C and INT routed by 0R options to 3085_1v8 / 2887_1v8 nets.",
+    "DC5V to 3.3V and 1.8V LDO": "New VBAT to 3.3V DCDC: U15 MT3102ASBR, L4, LDO_VCC3v3, enable DCDC3V3_EN.\nCheck: heading says 'DC5V to 3.3V' but the input is 55_VBAT.",
+    "VBAT to 1.8V LDO": "New: UA9 RT9193-18GB from 55_VBAT, LDO_VCC1V8, enable LDO1V8_EN.",
+    "I2C Level Shifter (untitled)": "New (no heading on sheet): U18-U20 SGM4553YN8G/TR 1.8V/3.3V level shifters for the 3085 / 2887 I2C and IMU_INT.",
+    "ATS2855 SUB_PIN_Header": "J1 kept; heading still reads 'ATS2855 SUB_PIN_Header'. About 40 BTB pins reassigned (see sheet 'Pin Change J1'). SW1 changed from SUB ADFU to ON/OFF key. New JP3/JP4/JP5 select SUB_SCL, SUB_SDA, IMU_INT for 3085 or 2887.\nCheck: designer notes 1, 8 and 9 on this sheet do not match the drawn pins.",
+    "USB / Power Option (untitled)": "Encryption IC moved to sheet 4. Option B diode source USB_5V to DCIN (D1 renamed D9). SUB UART1 links to ATS3031 removed. USB T18/T20 now to CoreB_DP/DM.",
+    "To Phone Jack": "Links to the carrier now fitted (NC to 0R). New JP6 header selects VCC_HP.",
+    "LT/RT Motor": "C10/C11 and D3/D4 now fitted. R18/R19 2.2K to 4.7R. DA5/DA6 changed to LTST-C190KRKT.\nCheck: LTST-C190KRKT is a red LED but the label still says 'Blue'; with M3/M4 NC the LED current is limited only by 4.7R.",
+    "Big/Small Motor": "C12/C13 and D5/D6 now fitted. R20/R21 2.2K to 4.7R. M1/M2 still NC.\nCheck: with M1/M2 NC, DA3/DA4 current is limited only by 4.7R.",
+    "Motor PWR": "Option A source LI_BAT to 55_VBAT and now NC; Option B source USB_5V to DC5V and now fitted; DC5V is DCIN or LI_BAT depending on JP1.\nCheck: SY7072 is a boost converter set to 3.24V (R26/R27); with DC5V = DCIN (5V) it cannot regulate below its input.",
+    "LCD": "8-pin SPI LCD header JA4 removed. JA5 HEADER 2X12_F to HEADER 2X14_F/NPPC142KFMS-RC. TP_SCL/TP_SDA from 3085_1v8 or 2887_3v3 via RZA256-RZA259.",
+    "LCD_VCC": "LCD LDO is now UA4 RT9078N-08GJ5 from 55_VBAT (was UA5 from LI_BAT), enable LCD_PWR_EN.",
+    "TP_POWER": "New: Q1 AO3415 high-side switch 55_VBAT to CTP_VDD, gate from LCD_PWR_EN.",
+    "BL_POWER": "New: backlight LDO UA5 RT9078N-08GJ5 (55_VBAT to LEDA) and Q2 AO3424 low-side switch on LEDK driven by LCD_BL_PWM.",
+    "RGB": "New: 10x 4020RGB chain from PY32 'RGB', VDD = DCIN.\nCheck: DCIN only exists with USB connected; confirm RGB is not needed on battery.",
+    "Keys": "74HC4051 IO expander removed; every key goes to the PY32 via 0R. SW2 SUB ON/OFF to HOME; SW19 B_SCREEN to B_FN; SW17/SW18 to C/Z keys; new SW24 Mute. SYNC LED removed.",
+    "Trigger/Sub/Shoulder Keys": "New block, was part of Keys: LT/RT, LB/RB and new M_LB/M_RB (SW27/SW28) via 0R to the PY32.",
+    "Back Buttons": "Mappable Action Buttons renamed Back Buttons; new ACT_BOT_3/4 (SW25/SW26).",
+    "I/O Ext MCU (PY32F031C18T6)": "New sheet: U17 PY32F040R1BT6 (LQFP-64) I/O expander MCU, 32MHz and 32.768KHz crystals, UART debug and programming headers.\nCheck: sheet title says PY32F031C18T6."
+  },
+  "check_items": [
+    ["01 History", "Table of contents lists 6 sheets with old names (04 ATS3031, 05 ATS2855, 06 LCD/Buttons); document has 7 sheets."],
+    ["02 / 03 / 07", "MCU part number differs: block diagram 'PY32F031C', power tree and sheet 7 title 'PY32F031C18T6', symbol U17 'PY32F040R1BT6' (LQFP-64)."],
+    ["03 / 04", "Power tree shows RT9193-33GB LDO for the 3.3V rail; sheet 04 generates LDO_VCC3v3 with DCDC U15 MT3102ASBR."],
+    ["04 DCIN OVP", "RZA282 0R is drawn from UA6 IN to OUT; if fitted it bypasses the ETA7014D2I OVP."],
+    ["04 Charger", "CZA17 on DCIN changed 1UF 16V to 1UF 6.3V and new CZA47 is 6.3V; confirm voltage derating on the 5V input."],
+    ["04 / 06", "3085 and 2887 I2C paths are both drawn as 0R; if both are fitted the nets are tied (for TP_SCL/TP_SDA a 1.8V net to a 3.3V net)."],
+    ["05 BTB", "Designer notes 1, 8, 9 do not match the drawn J1 pins; many reassigned pins are not in the note list."],
+    ["05 Motors", "R18-R21 changed 2.2K to 4.7R while motors stay NC: indicator LEDs limited only by 4.7R. DA5/DA6 are red LEDs but labelled 'Blue'."],
+    ["05 Motor PWR", "Default motor source is now Option B (DC5V); SY7072 boost set to 3.24V cannot regulate below a 5V input."],
+    ["06 RGB", "RGB chain VDD is DCIN (USB only); confirm RGB is not required on battery."]
+  ]
+}
